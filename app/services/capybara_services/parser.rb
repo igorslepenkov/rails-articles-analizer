@@ -3,20 +3,16 @@ require 'capybara/dsl'
 module CapybaraServices
   module Parser
     extend Capybara::DSL
+    def self.parse_digital_ocean_article(url)
+      Capybara.current_driver = :remote_selenium_headless
+      visit(url)
+      title = find('.HeadingStyles__StyledH1-sc-kkk1io-0').text
 
-    Capybara.run_server = false
+      comments = page.all('.CommentStyles__StyledCommentBody-sc-gn53o-7', visible: false).map(&:text)
 
-    def self.parse_article(_url)
-      Capybara.register_driver :selenium do |app|
-        Capybara::Selenium::Driver.new(app, browser: :chrome)
-      end
-
-      Capybara.current_driver = :selenium
-
-      visit('https://medium.com/yardcouch-com/youtube-is-dead-and-something-new-is-coming-132322b09be6')
-
-      title = find('.pw-post-title').text
-      puts title
+      { title:, comments: }
+    ensure
+      Capybara.current_session.driver.quit
     end
   end
 end
