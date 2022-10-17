@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root 'pages#home'
   resources :articles, only: %i[index new create]
+  get 'articles/:article_id/comments', to: 'comments#index', as: :article_comments
 end

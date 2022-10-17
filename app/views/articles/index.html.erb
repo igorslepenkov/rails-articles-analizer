@@ -19,7 +19,7 @@
             <td scope='row'> <%= idx + 1 %> </td>
             <td> <%= article.title %> </td>
             <td> <%= link_to 'Link', article.url %> </td>
-            <td> Empty </td>
+            <td> <%= link_to 'Comments', article_comments_path(article) %></td>
             <td> Empty </td>
           </tr>
         <% end %>
