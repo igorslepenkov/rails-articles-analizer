@@ -1,20 +1,22 @@
 <div class='w-100 d-flex flex-column justify-content-center align-items-center'>
-  <h1 class="text-primary h1">All analized articles:</h1>
-  <% if !@articles.empty? %>
-    <table class="w-75 table text-center mt-3">
+  <h1 class='text-primary h1'>All analized articles:</h1>
+  <% if @articles.empty? %>
+    <h2 class='text-info h2'>Sorry, there is nothing to display at the moment</h2>
+  <% else %>
+    <table class='w-75 table text-center mt-3'>
       <thead>
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">Title</th>
-          <th scope="col">URL</th>
-          <th scope="col">Comments</th>
-          <th scope="col">Raiting</th>
+          <th scope='col'>#</th>
+          <th scope='col'>Title</th>
+          <th scope='col'>URL</th>
+          <th scope='col'>Comments</th>
+          <th scope='col'>Raiting</th>
         </tr>
       </thead>
       <tbody>
         <% @articles.each_with_index do |article, idx| %>
           <tr>
-            <td scope="row"> <%= idx + 1 %> </td>
+            <td scope='row'> <%= idx + 1 %> </td>
             <td> <%= article.title %> </td>
             <td> <%= link_to 'Link', article.url %> </td>
             <td> Empty </td>
@@ -23,7 +25,5 @@
         <% end %>
       </tbody>
     </table>
-  <% else %>
-    <h2 class='text-info h2'>Sorry, there is nothing to display at the moment</h2>
   <% end %>
 </div>
