@@ -1,0 +1,12 @@
+<div class='w-100 d-flex flex-column justify-content-center align-items-center'>
+  <h1 class='text-primary h1'>Pass article's URL</h1>
+  <%= form_with(model: @article, url: articles_path, data: {turbo_method: :post}, class: 'w-50 text-center') do |form| %>
+    <div class='text-start text-primary mt-3'>
+      <%= form.label :url, 'Enter article\'s URL', class: 'lead' %>
+      <%= form.text_field :url, class: 'form-control' %>
+    </div>
+    <div>
+      <%= form.submit 'Analize', class: 'btn btn-primary btn-lg mt-3' %>
+    </div>
+  <% end %>
+</div>
