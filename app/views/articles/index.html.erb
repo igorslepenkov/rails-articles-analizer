@@ -1,6 +1,8 @@
 <div class='w-100 d-flex flex-column justify-content-center align-items-center'>
   <h1 class='text-primary h1'>All analized articles:</h1>
-  <% if !@articles.empty? %>
+  <% if @articles.empty? %>
+    <h2 class='text-info h2'>Sorry, there is nothing to display at the moment</h2>
+  <% else %>
     <table class='w-75 table text-center mt-3'>
       <thead>
         <tr>
@@ -23,7 +25,5 @@
         <% end %>
       </tbody>
     </table>
-  <% else %>
-    <h2 class='text-info h2'>Sorry, there is nothing to display at the moment</h2>
   <% end %>
 </div>
