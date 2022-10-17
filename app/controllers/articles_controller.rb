@@ -8,10 +8,20 @@ class ArticlesController < ApplicationController
   end
 
   def create
-    @article = Article.new(article_params)
+    @article = Article.new(url: article_params[:url])
+
     response = CapybaraServices::Parser.parse_digital_ocean_article(@article.url)
+
     @article[:title] = response[:title]
+
     if @article.save
+      comments = response[:comments]
+      if comments && !comments.empty?
+        comments.each do |comment|
+          comment_instance = Comment.create(text: comment, article_id: @article.id)
+        end
+      end
+
       redirect_to root_path
     else
       render 'new', status: :bad_request
@@ -21,6 +31,6 @@ class ArticlesController < ApplicationController
   private
 
   def article_params
-    params.require(:article).permit(:url)
+    params.require(:article).permit(:url, :comments)
   end
 end

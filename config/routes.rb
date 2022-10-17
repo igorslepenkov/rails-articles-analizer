@@ -5,5 +5,5 @@ Rails.application.routes.draw do
   root 'pages#home'
   get '/analize', to: 'articles#new'
   post '/analize', to: 'articles#create'
-  get 'articles', to: 'articles#index'
+  get '/articles', to: 'articles#index'
 end
