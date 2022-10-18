@@ -11,6 +11,7 @@
           <th scope='col'>URL</th>
           <th scope='col'>Comments</th>
           <th scope='col'>Raiting</th>
+          <th scope='col'>Impact</th>
         </tr>
       </thead>
       <tbody>
@@ -20,7 +21,8 @@
             <td> <%= article.title %> </td>
             <td> <%= link_to 'Link', article.url %> </td>
             <td> <%= link_to 'Comments', article_comments_path(article) %></td>
-            <td> Empty </td>
+            <td> <%= article.rating %> </td>
+            <td> <%= article.impact %> </td>
           </tr>
         <% end %>
       </tbody>

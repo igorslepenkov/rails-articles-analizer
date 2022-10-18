@@ -9,7 +9,8 @@
         <tr>
           <th scope='col'>#</th>
           <th scope='col'>Text</th>
-          <th scope='col'>Raiting</th>
+          <th scope='col'>Sentiment</th>
+          <th scope='col'>Confidence</th>
         </tr>
       </thead>
       <tbody>
@@ -17,7 +18,8 @@
           <tr>
             <td scope='row'> <%= idx + 1 %> </td>
             <td> <%= comment.text %> </td>
-            <td> Empty </td>
+            <td> <%= comment.sentiment %> </td>
+            <td> <%= comment.confidence %> </td>
           </tr>
         <% end %>
       </tbody>
