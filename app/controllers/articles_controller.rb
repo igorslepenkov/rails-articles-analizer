@@ -19,7 +19,6 @@ class ArticlesController < ApplicationController
       if comments && !comments.empty?
         analized_comments = MonkeyLearnServices::SemanticAnalizer.analize_comments(comments)
         analized_comments.each do |analyzed_comment|
-          puts analyzed_comment
           Comment.create(text: analyzed_comment['text'], 
                           article_id: @article.id, 
                           sentiment: analyzed_comment['classifications'][0]['tag_name'],
