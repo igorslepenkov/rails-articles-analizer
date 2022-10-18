@@ -17,5 +17,18 @@ module CapybaraServices
     ensure
       Capybara.current_session.driver.quit
     end
+
+    def self.parse_devto_article(url)
+      Capybara.current_driver = :remote_selenium_headless
+      visit(url)
+      title = find('#main-title h1').text
+
+      comments = page.all(".comment__body p",
+                          visible: false).map(&:text)
+
+      { title:, comments: }
+    ensure
+      Capybara.current_session.driver.quit
+    end
   end
 end
