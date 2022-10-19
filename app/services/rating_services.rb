@@ -35,4 +35,3 @@ module RatingServices
     end
   end
 end
-
