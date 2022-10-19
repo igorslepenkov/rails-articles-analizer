@@ -3,5 +3,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root 'pages#home'
-  resources :articles, only: %i[index new create]
+  resources :articles, only: %i[index new create] do
+    get 'comments', to: 'comments#index', on: :member
+  end
 end

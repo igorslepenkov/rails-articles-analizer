@@ -1,0 +1,26 @@
+<div class='w-100 d-flex flex-column justify-content-center align-items-center'>
+  <h1 class='text-primary h1'>Article: '<%= @comments.first.article.title %>'</h1>
+  <h2 class='text-info h2 text-center'>Comments</h2>
+  <% if @comments.empty? %>
+    <h2 class='text-info h2'>Sorry, there is no comments at the moment</h2>
+  <% else %>
+    <table class='w-75 table text-center mt-3'>
+      <thead>
+        <tr>
+          <th scope='col'>#</th>
+          <th scope='col'>Text</th>
+          <th scope='col'>Rating</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @comments.each_with_index do |comment, idx| %>
+          <tr>
+            <td scope='row'> <%= idx + 1 %> </td>
+            <td> <%= comment.text %> </td>
+            <td> Empty </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>

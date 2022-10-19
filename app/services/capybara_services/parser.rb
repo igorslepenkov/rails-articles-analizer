@@ -8,7 +8,10 @@ module CapybaraServices
       visit(url)
       title = find('.HeadingStyles__StyledH1-sc-kkk1io-0').text
 
-      comments = page.all('.CommentStyles__StyledCommentBody-sc-gn53o-7', visible: false).map(&:text)
+      comments = page.all(".CommentStyles__StyledCommentBody-sc-gn53o-7 
+                            .CommentStyles__StyledCommentBody-sc-gn53o-7 
+                            .Markdown_markdown__7Dog_",
+                          visible: false).map(&:text)
 
       { title:, comments: }
     ensure
