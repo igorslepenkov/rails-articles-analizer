@@ -1,12 +1,11 @@
 class CommentsController < ApplicationController
   def index
-    @article = Article.find(comments_params)
-    @comments = Comment.where(article_id: @article.id)
+    @comments = Comment.where(article_id: comments_params)
   end
 
   private
 
   def comments_params
-    params.require(:article_id)
+    params.require(:id)
   end
 end
