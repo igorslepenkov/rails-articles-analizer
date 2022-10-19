@@ -10,7 +10,7 @@
           <th scope='col'>Title</th>
           <th scope='col'>URL</th>
           <th scope='col'>Comments</th>
-          <th scope='col'>Raiting</th>
+          <th scope='col'>Rating</th>
           <th scope='col'>Impact</th>
         </tr>
       </thead>
@@ -20,7 +20,7 @@
             <td scope='row'> <%= idx + 1 %> </td>
             <td> <%= article.title %> </td>
             <td> <%= link_to 'Link', article.url %> </td>
-            <td> <%= link_to 'Comments', article_comments_path(article) %></td>
+            <td> <%= link_to 'Comments', comments_article_path(article) %></td>
             <td> <%= article.rating %> </td>
             <td> <%= article.impact %> </td>
           </tr>
