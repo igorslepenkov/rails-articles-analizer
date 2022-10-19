@@ -1,24 +1,29 @@
 module RatingServices
   class ArticleRatingCalculator < ApplicationService
+    NEUTRAL_RANGE = -20..20
+    NEUTRAL_POINTS = NEUTRAL_RANGE.to_a.size
+
     def initialize(article)
       @article = article
     end
 
     def call
-      article_comments = @article.comments
-      positive = @article.comments.filter { |comment| comment.sentiment == 'Positive' }
-      negative = @article.comments.filter { |comment| comment.sentiment == 'Negative' }
+      filtered_comments = @article.comments.reduce({positive: [], negative: [], neutral: []}) do |acc, comment|
+        acc[:positive].push(comment) if comment.sentiment == 'Positive'
+        acc[:negative].push(comment) if comment.sentiment == 'Negative'
+        acc[:neutral].push(comment) if comment.sentiment == 'Neutral'
+        acc
+      end
       rating = 0
-      if positive.empty? && negative.empty?
-        neutral = @article.comments.filter { |comment| comment.sentiment == 'Neutral' }
-        confidence_arr = neutral.map { |comment| comment.confidence }
+      if filtered_comments[:positive].empty? && filtered_comments[:negative].empty?
+        confidence_arr = filtered_comments[:neutral].map { |comment| comment.confidence }
         avg_confidence = confidence_arr.sum(0.00) / 100 / confidence_arr.size
-        rating = (avg_confidence * 40) - 20
+        rating = (avg_confidence * NEUTRAL_POINTS) - NEUTRAL_POINTS / 2
         @article.rating = rating
       else
-        coef = (100 / (positive.size + negative.size)).round
-        positive.each { rating += coef }
-        negative.each { rating -= coef }
+        coef = (100 / (filtered_comments[:positive].size + filtered_comments[:negative].size)).round
+        rating += filtered_comments[:positive].size * coef
+        rating -= filtered_comments[:negative].size * coef
         @article.rating = rating
       end
   

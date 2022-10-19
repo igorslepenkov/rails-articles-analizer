@@ -9,9 +9,6 @@ module MonkeyLearnServices
     def call
       initialize_request
 
-      @req.body = {
-        data: @comments
-      }.to_json
       Net::HTTP.start(URL.host, URL.port, use_ssl: true) do |http|
         JSON.parse(http.request(@req).body)
       end
@@ -23,6 +20,9 @@ module MonkeyLearnServices
       @req = Net::HTTP::Post.new(URL)
       @req['Authorization'] = "Token #{ENV['MONKEY_KEY']}"
       @req['Content-Type'] = 'application/json'
+      @req.body = {
+        data: @comments
+      }.to_json
     end
   end
 end
