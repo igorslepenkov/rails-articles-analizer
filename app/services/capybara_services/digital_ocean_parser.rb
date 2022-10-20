@@ -1,15 +1,20 @@
 require 'capybara/dsl'
 
 module CapybaraServices
-  module Parser
-    extend Capybara::DSL
-    def self.parse_digital_ocean_article(url)
+  class DigitalOceanParser < ApplicationService
+    def initialize(url)
+      @url = url
+    end
+
+    def call
+      extend Capybara::DSL
+      
       Capybara.current_driver = :remote_selenium_headless
-      visit(url)
+      visit(@url)
       title = find('.HeadingStyles__StyledH1-sc-kkk1io-0').text
 
-      comments = page.all(".CommentStyles__StyledCommentBody-sc-gn53o-7 
-                            .CommentStyles__StyledCommentBody-sc-gn53o-7 
+      comments = page.all(".CommentStyles__StyledCommentBody-sc-gn53o-7
+                            .CommentStyles__StyledCommentBody-sc-gn53o-7
                             .Markdown_markdown__7Dog_",
                           visible: false).map(&:text)
 

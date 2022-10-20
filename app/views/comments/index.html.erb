@@ -1,5 +1,5 @@
 <div class='w-100 d-flex flex-column justify-content-center align-items-center'>
-  <h1 class='text-primary h1'>Article: '<%= @article.title %>'</h1>
+  <h1 class='text-primary h1'>Article: '<%= @comments.first.article.title %>'</h1>
   <h2 class='text-info h2 text-center'>Comments</h2>
   <% if @comments.empty? %>
     <h2 class='text-info h2'>Sorry, there is no comments at the moment</h2>
