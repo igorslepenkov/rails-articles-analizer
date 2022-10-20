@@ -2,17 +2,20 @@ module RatingServices
   class ArticleRatingCalculator < ApplicationService
     NEUTRAL_RANGE = -20..20
     NEUTRAL_POINTS = NEUTRAL_RANGE.to_a.size
+    NEGATIVE_SENTIMENT = 'Negative'
+    POSITIVE_SENTIMENT = 'Positive'
+    NEUTRAL_SENTIMENT = 'Neutral'
 
     def initialize(article)
       @article = article
     end
 
     def call
-      filtered_comments = @article.comments.reduce({positive: [], negative: [], neutral: []}) do |acc, comment|
-        acc[:positive].push(comment) if comment.sentiment == 'Positive'
-        acc[:negative].push(comment) if comment.sentiment == 'Negative'
-        acc[:neutral].push(comment) if comment.sentiment == 'Neutral'
-        acc
+      filtered_comments = @article.comments.each_with_object({ positive: [], negative: [],
+                                                               neutral: [] }) do |comment, acc|
+        acc[:positive].push(comment) if comment.sentiment == POSITIVE_SENTIMENT
+        acc[:negative].push(comment) if comment.sentiment == NEGATIVE_SENTIMENT
+        acc[:neutral].push(comment) if comment.sentiment == NEUTRAL_SENTIMENT
       end
       rating = 0
       if filtered_comments[:positive].empty? && filtered_comments[:negative].empty?
@@ -26,17 +29,23 @@ module RatingServices
         rating -= filtered_comments[:negative].size * coef
         @article.rating = rating
       end
-  
-      case @article.rating
-      when -20..20
-        @article.impact = 'Neutral'
-      when -100...-20
-        @article.impact = 'Negative'
-      when 21..100
-        @article.impact = 'Positive'
-      end
-  
+
+      define_article_impact(@article)
+
       @article.save
+    end
+
+    private
+
+    def define_article_impact(article)
+      case article.rating
+      when -20..20
+        article.impact = NEUTRAL_SENTIMENT
+      when -100...-20
+        article.impact = NEGATIVE_SENTIMENT
+      when 21..100
+        article.impact = POSITIVE_SENTIMENT
+      end
     end
   end
 end
