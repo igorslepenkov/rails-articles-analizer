@@ -10,19 +10,24 @@ class ArticlesController < ApplicationController
   def create
     @article = Article.new(url: article_params[:url])
 
-    response = CapybaraServices::Parser.parse_digital_ocean_article(@article.url)
+    response = CapybaraServices::DigitalOceanParser.call(@article.url)
 
     @article[:title] = response[:title]
 
     if @article.save
-      comments = response[:comments]
+      comments = response[:comments].first(50)
       if comments && !comments.empty?
-        comments.each do |comment|
-          comment_instance = Comment.create(text: comment, article_id: @article.id)
+        analized_comments = MonkeyLearnServices::SentimentAnalizer.call(comments)
+        analized_comments.each do |analyzed_comment|
+          Comment.create(text: analyzed_comment['text'],
+                         article_id: @article.id,
+                         sentiment: analyzed_comment['classifications'][0]['tag_name'],
+                         confidence: analyzed_comment['classifications'][0]['confidence'] * 100)
         end
+        RatingServices::ArticleRatingCalculator.call(@article)
       end
 
-      redirect_to root_path
+      redirect_to articles_path
     else
       render 'new', status: :bad_request
     end
