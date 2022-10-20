@@ -22,13 +22,12 @@ module RatingServices
         confidence_arr = filtered_comments[:neutral].map { |comment| comment.confidence }
         avg_confidence = confidence_arr.sum(0.00) / 100 / confidence_arr.size
         rating = (avg_confidence * NEUTRAL_POINTS) - NEUTRAL_POINTS / 2
-        @article.rating = rating
       else
         coef = (100 / (filtered_comments[:positive].size + filtered_comments[:negative].size)).round
         rating += filtered_comments[:positive].size * coef
         rating -= filtered_comments[:negative].size * coef
-        @article.rating = rating
       end
+      @article.rating = rating
 
       define_article_impact
 
