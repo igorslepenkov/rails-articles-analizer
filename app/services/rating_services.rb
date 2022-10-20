@@ -30,21 +30,21 @@ module RatingServices
         @article.rating = rating
       end
 
-      define_article_impact(@article)
+      define_article_impact
 
       @article.save
     end
 
     private
 
-    def define_article_impact(article)
-      case article.rating
+    def define_article_impact
+      case @article.rating
       when -20..20
-        article.impact = NEUTRAL_SENTIMENT
+        @article.impact = NEUTRAL_SENTIMENT
       when -100...-20
-        article.impact = NEGATIVE_SENTIMENT
+        @article.impact = NEGATIVE_SENTIMENT
       when 21..100
-        article.impact = POSITIVE_SENTIMENT
+        @article.impact = POSITIVE_SENTIMENT
       end
     end
   end
