@@ -1,6 +1,8 @@
 require 'webdrivers'
 require 'selenium-webdriver'
 
+Selenium::WebDriver::Chrome.path = ENV['GOOGLE_CHROME_SHIM']
+
 Capybara.run_server = false
 Capybara.default_max_wait_time = 1
 Capybara.ignore_hidden_elements = false
