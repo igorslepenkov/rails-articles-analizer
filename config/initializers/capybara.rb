@@ -1,13 +1,13 @@
 require 'webdrivers'
 require 'selenium-webdriver'
 
-Selenium::WebDriver::Chrome.path = ENV['GOOGLE_CHROME_SHIM']
-
 Capybara.run_server = false
 Capybara.default_max_wait_time = 1
 Capybara.ignore_hidden_elements = false
 
 chrome_bin = ENV.fetch('GOOGLE_CHROME_SHIM', nil)
+
+Selenium::WebDriver::Chrome.path = chrome_bin if chrome_bin
 
 chrome_opts =
   Capybara.register_driver :remote_selenium_headless do |app|
