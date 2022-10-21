@@ -2,13 +2,13 @@ require 'capybara/dsl'
 
 module CapybaraServices
   class DigitalOceanParser < ApplicationService
+    include Capybara::DSL
+
     def initialize(url)
       @url = url
     end
 
     def call
-      extend Capybara::DSL
-
       Capybara.current_driver = :remote_selenium_headless
       visit(@url)
       title = find('.HeadingStyles__StyledH1-sc-kkk1io-0').text

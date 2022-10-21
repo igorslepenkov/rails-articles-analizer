@@ -2,13 +2,13 @@ require 'capybara/dsl'
 
 module CapybaraServices
   class DevToParser < ApplicationService
+    include Capybara::DSL
+
     def initialize(url)
       @url = url
     end
 
     def call
-      extend Capybara::DSL
-
       Capybara.current_driver = :remote_selenium_headless
       visit(@url)
       title = find('#main-title h1').text
