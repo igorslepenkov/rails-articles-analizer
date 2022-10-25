@@ -9,18 +9,13 @@ chrome_bin = ENV.fetch('GOOGLE_CHROME_SHIM', nil)
 
 Selenium::WebDriver::Chrome.path = chrome_bin if chrome_bin
 
-chrome_opts =
-  Capybara.register_driver :remote_selenium_headless do |app|
-    options = Selenium::WebDriver::Chrome::Options.new
-    options.add_argument('--headless')
-    options.add_argument('--window-size=1400,1400')
-    options.add_argument('--no-sandbox')
-    options.add_argument('--disable-dev-shm-usage')
-    chrome_bin ? options.binary = chrome_bin : nil
+Capybara.register_driver :remote_selenium_headless do |app|
+  selenium_options = Selenium::WebDriver::Chrome::Options.new
+  selenium_options.add_argument('--headless')
 
-    Capybara::Selenium::Driver.new(
-      app,
-      browser: :chrome,
-      options:
-    )
-  end
+  Capybara::Selenium::Driver.new(
+    app,
+    browser: :chrome,
+    options: selenium_options
+  )
+end
