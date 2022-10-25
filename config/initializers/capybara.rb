@@ -12,6 +12,9 @@ Selenium::WebDriver::Chrome.path = chrome_bin if chrome_bin
 Capybara.register_driver :remote_selenium_headless do |app|
   selenium_options = Selenium::WebDriver::Chrome::Options.new
   selenium_options.add_argument('--headless')
+  selenium_options.add_argument('--window-size=1400,1400')
+  selenium_options.add_argument('--no-sandbox')
+  selenium_options.add_argument('--disable-dev-shm-usage')
 
   Capybara::Selenium::Driver.new(
     app,
