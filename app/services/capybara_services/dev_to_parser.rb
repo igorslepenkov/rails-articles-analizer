@@ -1,7 +1,7 @@
 require 'capybara/dsl'
 
 module CapybaraServices
-  class DigitalOceanParser < ApplicationService
+  class DevToParser < ApplicationService
     include Capybara::DSL
 
     def initialize(url)
@@ -11,11 +11,9 @@ module CapybaraServices
     def call
       Capybara.current_driver = :remote_selenium_headless
       visit(@url)
-      title = find('.HeadingStyles__StyledH1-sc-kkk1io-0').text
+      title = find('#main-title h1').text
 
-      comments = page.all(".CommentStyles__StyledCommentBody-sc-gn53o-7
-                            .CommentStyles__StyledCommentBody-sc-gn53o-7
-                            .Markdown_markdown__7Dog_",
+      comments = page.all('.comment__body p',
                           visible: false).map(&:text)
 
       { title:, comments: }

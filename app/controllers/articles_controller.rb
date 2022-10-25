@@ -10,7 +10,7 @@ class ArticlesController < ApplicationController
   def create
     @article = Article.new(url: article_params[:url])
 
-    response = CapybaraServices::DigitalOceanParser.call(@article.url)
+    response = get_parser_response(@article.url)
 
     @article[:title] = response[:title]
 
@@ -37,5 +37,15 @@ class ArticlesController < ApplicationController
 
   def article_params
     params.require(:article).permit(:url)
+  end
+
+  def get_parser_response(url)
+    host = URI(url).host
+    case host
+    when 'dev.to'
+      CapybaraServices::DevToParser.call(url)
+    when 'www.digitalocean.com'
+      CapybaraServices::DigitalOceanParser.call(url)
+    end
   end
 end
