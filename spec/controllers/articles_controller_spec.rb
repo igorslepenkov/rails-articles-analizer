@@ -57,9 +57,12 @@ RSpec.describe ArticlesController, type: :controller do
     end
 
     context 'when parser did not response with title and comments' do
-      it 'should render "new" with :bad_request status if article did not receive title from parser' do
+      before do
         allow_any_instance_of(ArticlesController).to receive(:article_params).and_return({url: 'https://www.digitalocean.com/community/tutorials/how-to-remove-docker-images-containers-and-volumes'})
         allow_any_instance_of(ArticlesController).to receive(:get_parser_response).and_return({title: '', comments: []})
+      end
+      
+      it 'should render "new" with :bad_request status if article did not receive title from parser' do
         post 'create', params: { article: { url: 'https://www.digitalocean.com/community/tutorials/how-to-remove-docker-images-containers-and-volumes' } }
         expect(response).to have_http_status(:bad_request)
         expect(response).to render_template('new')
