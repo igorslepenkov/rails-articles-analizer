@@ -9,14 +9,18 @@ module CapybaraServices
     end
 
     def call
-      Capybara.current_driver = :remote_selenium_headless
-      visit(@url)
-      title = find('#main-title h1').text
-
-      comments = page.all('.comment__body p',
-                          visible: false).map(&:text)
-
-      { title:, comments: }
+      if(@url=~URI::regexp)
+        Capybara.current_driver = :remote_selenium_headless
+        visit(@url)
+        title = find('#main-title h1').text
+  
+        comments = page.all('.comment__body p',
+                            visible: false).map(&:text)
+  
+        { title:, comments: }
+      else
+        {title: '', comments: []}
+      end
     ensure
       Capybara.current_session.driver.quit
     end
