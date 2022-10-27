@@ -46,6 +46,8 @@ class ArticlesController < ApplicationController
       CapybaraServices::DevToParser.call(url)
     when 'www.digitalocean.com'
       CapybaraServices::DigitalOceanParser.call(url)
+    else
+      raise NewslizerExceptions::DomainNotSupported.new
     end
   end
 end
