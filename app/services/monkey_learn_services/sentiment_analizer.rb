@@ -8,9 +8,15 @@ module MonkeyLearnServices
 
     def call
       initialize_request
-
       Net::HTTP.start(URL.host, URL.port, use_ssl: true) do |http|
-        JSON.parse(http.request(@req).body)
+        response = http.request(@req)
+        response_data = JSON.parse(response.body)
+
+        if response_data.is_a?(Hash) && response_data['status_code'] != 200
+          raise NewslizerExceptions::SentimentAnalizerReturnedAnError
+        end
+
+        response_data
       end
     end
 

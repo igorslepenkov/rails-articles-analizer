@@ -9,20 +9,20 @@ module CapybaraServices
     end
 
     def call
-      if(@url=~URI::regexp)
-        Capybara.current_driver = :remote_selenium_headless
+      Capybara.current_driver = :remote_selenium_headless
+      begin
         visit(@url)
-        title = find('#main-title h1').text
-  
+        title = find('#main-title h1').text || ''
+    
         comments = page.all('.comment__body p',
-                            visible: false).map(&:text)
-  
+                            visible: false).map(&:text) || []
+    
         { title:, comments: }
-      else
+      rescue Capybara::ElementNotFound, Selenium::WebDriver::Error::InvalidArgumentError
         {title: '', comments: []}
+      ensure
+        Capybara.current_session.driver.quit
       end
-    ensure
-      Capybara.current_session.driver.quit
     end
   end
 end
