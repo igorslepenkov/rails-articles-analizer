@@ -19,7 +19,7 @@ module CapybaraServices
     
         { title:, comments: }
       rescue Capybara::ElementNotFound, Selenium::WebDriver::Error::InvalidArgumentError
-        {title: '', comments: []}
+        { title: '', comments: [] }
       ensure
         Capybara.current_session.driver.quit
       end
