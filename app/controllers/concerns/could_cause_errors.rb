@@ -3,7 +3,7 @@ module CouldCauseErrors
 
   included do
     rescue_from NewslizerExceptions::DomainNotSupported, with: :domain_not_supported
-    resuce_from NewslizerExceptions::SentimentAnalizerReturnedAnError, with: :unexpected_error_from_analizer
+    rescue_from NewslizerExceptions::SentimentAnalizerReturnedAnError, with: :unexpected_error_from_analizer
   end
 
   private

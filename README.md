@@ -1,24 +1,33 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+<div id="top"></div>
+<br />
+<div align="center">
+  <a href="https://github.com/igorslepenkov/rails-alpha-blog">
+    <img src="./images.png" alt="Logo" width="80" height="80">
+  </a>
 
-Things you may want to cover:
+  <h3 align="center">Rails Newslizer App</h3>
 
-* Ruby version
+  <p align="center">Educational articles' parser and analizer project</p>
+</div>
 
-* System dependencies
+### About Project
 
-* Configuration
+This is my fourth small Ruby project, that I have created during my RoR internship at IThechArt company.
 
-* Database creation
+This is an interesting app, that uses Capybara + Selenium WebDriver(that is actually used for testing) to parse comments for articles of tech blogs <strong>(dev.to and digital ocean)</strong> and Monkey Learn ML API to analize comments' sentiment and make a decision about the whole article.
 
-* Database initialization
+It includes only 2 models with simple associations.
 
-* How to run the test suite
+The key feature, I need to mention, is wide use of services through app's workflow and tests for the app, made with RSpec.
 
-* Services (job queues, cache servers, search engines, etc.)
+Font made with HTML-ERB and Bootstrap 5
 
-* Deployment instructions
+### Built With
 
-* ...
+- [Ruby on Rails](https://rubyonrails.org/)
+- [Bootstrap](https://getbootstrap.com/docs/5.0/getting-started/introduction/)
+- [MonkeyLearn](https://monkeylearn.com/)
+- [Capybara](http://teamcapybara.github.io/capybara/)
+- [RSpec](https://rspec.info/)
